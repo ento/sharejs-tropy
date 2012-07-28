@@ -59,13 +59,14 @@ module.exports = Tropy = (options) ->
         callback docName, data.snapshot
 
   this.create = (callback) ->
-    created = false
-    while not created
-      docName = hat()
-      model.create docName, 'text', (error) ->
-        if not error
-          created = true
-          callback docName
+    that = this
+    docName = hat()
+    model.create docName, 'text', (error) ->
+      if not error
+        callback docName
+      else
+        that.create callback
+        console.log 'create error', error
 
   this.random = (callback) ->
     if dbcli
