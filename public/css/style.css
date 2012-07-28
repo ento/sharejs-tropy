@@ -1,0 +1,50 @@
+body {
+  overflow: hidden;
+  background-color: #eee;
+}
+
+#header {
+  bottom: 0;
+  font-family: baskerville, palatino, 'palatino linotype', georgia,serif;
+  height: 100%;
+  left: 0;
+  padding: 0 1em 0 1em;
+  position: fixed;
+  top: 0;
+  width: 14em;
+}
+
+#header h1:empty {
+  border: 1px dashed #ccc;
+  height: 1em;
+  width: 5em;
+}
+
+#header ul {
+  font-size: 18px;
+  padding-left: 0;
+}
+
+#header li {
+  display: inline;
+  line-height: 1.4;
+  list-style-type: none;
+}
+
+#header ul a {
+  color: #339;
+}
+
+#content {
+}
+
+#editor { 
+  background-color: #fff;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 21em;
+  right: 21em;
+  min-width: 60em;
+}

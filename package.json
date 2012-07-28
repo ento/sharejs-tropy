@@ -1,0 +1,36 @@
+{
+  "name": "sharejs-tropy",
+  "preferGlobal": "false",
+  "version": "0.1.0",
+  "author": "Marica Odagaki",
+  "description": "tropy in ShareJS",
+  "scripts": {
+    "start": "coffee ./bin/tropy"
+  },
+  "main": "./lib/tropy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ento/sharejs-tropy.git"
+  },
+  "keywords": [
+    "http",
+    "server"
+  ],
+  "dependencies" : {
+    "share"   :  "0.5.0",
+    "connect": "~1",
+    "optimist": ">= 0.2.4",
+    "simplesets": "1.2.0",
+    "mustache": "*",
+    "redis": "*",
+    "hat": "*"
+  },
+  "devDependencies": {
+  },
+  "bundleDependencies": [
+  ],
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.6"
+  }
+}

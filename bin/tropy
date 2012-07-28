@@ -1,0 +1,62 @@
+#!/usr/bin/env coffee
+
+connect = require 'connect'
+sharejs = require 'share'
+
+redirectTo = (docName, res) ->
+    res.writeHead(303, {location: '/' + docName})
+    res.write('')
+    res.end()
+
+options =
+  db: {type: 'none'}
+  browserChannel: {cors: '*'}
+
+# Lets try and enable redis persistance if redis is installed...
+try
+  require('redis')
+  options.db = {type: 'redis'}
+catch e
+
+console.log("ShareJS v" + sharejs.version)
+console.log("Options: ", options)
+
+tropy = new (require '../lib/')(options)
+
+server = connect(
+    connect.favicon(),
+    connect.static(__dirname + '/../public'),
+    connect.router (app) ->
+        app.get '/', (req, res, next) ->
+            redirectTo 'random', res
+
+        app.get '/create', (req, res, next) ->
+            tropy.create (docName) ->
+                redirectTo docName, res
+
+        app.get '/random', (req, res, next) ->
+            tropy.random (docName) ->
+                redirectTo docName, res
+
+        app.get '/:docName', (req, res, next) ->
+            docName = req.params.docName
+            tropy.get docName, (docName, content) ->
+                tropy.render docName, content, res
+)
+
+# Attach the sharejs REST and Socket.io interfaces to the server
+tropy.attach server
+
+argv = require('optimist').
+    usage("Usage: $0 [-p portnum]").
+    default('p', 8000).
+    alias('p', 'port').
+    argv
+port = argv.p
+server.listen port
+console.log("Demos running at http://localhost:" + port)
+
+process.title = 'sharejs'
+process.on 'uncaughtException', (err) ->
+  console.error('An error has occurred. Please file a ticket here: https://github.com/josephg/ShareJS/issues')
+  console.error('Version ' + sharejs.version + ': ' + err.stack)
