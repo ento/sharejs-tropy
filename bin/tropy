@@ -36,7 +36,10 @@ server = connect(
 
         app.get '/random', (req, res, next) ->
             tropy.random (docName) ->
-                redirectTo docName, res
+                if not docName
+                    redirectTo 'create', res
+                else
+                    redirectTo docName, res
 
         app.get '/:docName', (req, res, next) ->
             docName = req.params.docName
